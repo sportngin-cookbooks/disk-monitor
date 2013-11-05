@@ -13,19 +13,19 @@ define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :b
     a[:bin_path] = params[:bin_path]
   end
 
-  template a[:bin_path] do
-    source a[:template]
-    cookbook a[:cookbook]
-    user a[:user]
-    group a[:group]
+  template application[:bin_path] do
+    source application[:template]
+    cookbook application[:cookbook]
+    user application[:user]
+    group application[:group]
     chmod 0755
     variables application
   end
 
   cron "disk-alert" do
-    minute "*/#{a[:check_frequency]}"
-    user a[:user]
-    command a[:bin_path]
+    minute "*/#{application[:check_frequency]}"
+    user application[:user]
+    command application[:bin_path]
   end
 
 end
