@@ -1,0 +1,22 @@
+#!/bin/sh
+
+function alert {
+curl -H "Content-type: application/json" -X POST \
+  -d "{
+      'service_key': '<%= @pd_service_key %>',
+      'incident_key': '<%= @app_name %>-<%= @environment %>',
+      'event_type': 'trigger',
+      'description': \"<%= @app_name %> <%= @environment %> running low on disk space $1($2%) <%= @hostname %>\",
+    }" \
+    "https://events.pagerduty.com/generic/2010-04-15/create_event.json"
+}
+
+df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read output;
+do
+  echo $output
+  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
+  partition=$(echo $output | awk '{ print $2 }' )
+  if [ $usep -ge <%= @alert_threshold %> ]; then
+    alert $partition $usep
+  fi
+done
