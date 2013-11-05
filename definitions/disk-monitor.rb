@@ -1,5 +1,6 @@
 define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/disk-alert" do
   application = Hash.new("").tap do |a|
+    a[:alert_level] = params[:name]
     a[:app_name] = params[:app_name]
     a[:environment] = params[:environment]
     a[:pd_service_key] = params[:pd_service_key]
@@ -13,7 +14,7 @@ define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :b
     a[:bin_path] = params[:bin_path]
   end
 
-  template application[:bin_path] do
+  template "#{application[:bin_path]}-#{application[:alert_level]}" do
     source application[:template]
     cookbook application[:cookbook]
     user application[:user]
@@ -22,7 +23,7 @@ define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :b
     variables application
   end
 
-  cron "disk-alert" do
+  cron "disk-alert-#{application[:alert_level]}" do
     minute "*/#{application[:check_frequency]}"
     user application[:user]
     command application[:bin_path]
