@@ -18,7 +18,7 @@ define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :b
     cookbook application[:cookbook]
     user application[:user]
     group application[:group]
-    chmod 0755
+    mode 0755
     variables application
   end
 
