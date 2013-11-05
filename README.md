@@ -1,2 +1,0 @@
-chef-disk-monitor
-=================
