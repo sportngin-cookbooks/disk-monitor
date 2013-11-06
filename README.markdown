@@ -16,14 +16,15 @@ Attributes
 * template - Location of the template file defaults to 'alert.sh.erb'
 * cookbook - Change the cookbook to run the lwrp from defaults to this cookbook
 * check_frequency - Frequency of the disk check, defaults to every 15 minutes
-* bin_path - Location of the disk alert binary, defaults to /usr/local/bin/disk-alert
+* bin_path - Path to the bin directory to place the alert, defaults to /usr/local/bin
+* bin_file -  Name of the alert binary, defaults to disk-alert-NAME
 
 Usage
 --------
 
  ```ruby
 
-disk_monitor do
+disk_monitor "warning" do
   app_name "My App"
   environment "production"
   pd_service_key "1234567890"

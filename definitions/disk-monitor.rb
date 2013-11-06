@@ -1,4 +1,4 @@
-define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/disk-alert" do
+define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin" do
   application = Hash.new("").tap do |a|
     a[:alert_level] = params[:name]
     a[:app_name] = params[:app_name]
@@ -12,9 +12,11 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/
     a[:cookbook] = params[:cookbook] || "disk-monitor"
     a[:check_frequency] = params[:check_frequency] || 15
     a[:bin_path] = params[:bin_path]
+    a[:bin_file] = params[:bin_file] || "disk-alert-#{application[:alert_level]}"
+    a[:bin] = "#{application[:bin_path]}/#{application[:bin_file]}"
   end
 
-  template "#{application[:bin_path]}-#{application[:alert_level]}" do
+  template application[:bin] do
     source application[:template]
     cookbook application[:cookbook]
     user application[:user]
@@ -26,7 +28,7 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/
   cron "disk-alert-#{application[:alert_level]}" do
     minute "*/#{application[:check_frequency]}"
     user application[:user]
-    command application[:bin_path]
+    command application[:bin]
   end
 
 end
