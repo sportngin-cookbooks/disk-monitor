@@ -1,11 +1,11 @@
-define :disk_monitor, :alerting_threshold => 90, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/disk-alert" do
+define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin/disk-alert" do
   application = Hash.new("").tap do |a|
     a[:alert_level] = params[:name]
     a[:app_name] = params[:app_name]
     a[:environment] = params[:environment]
     a[:pd_service_key] = params[:pd_service_key]
     a[:hostname] = params[:hostname] || node[:hostname]
-    a[:alerting_threshold] = params[:alerting_threshold].to_i
+    a[:alerting_threshold] = params[:alerting_threshold] || 90
     a[:user] = params[:user] || "root"
     a[:group] = params[:group] || "root"
     a[:template] = params[:template]
