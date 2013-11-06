@@ -16,7 +16,7 @@ do
   echo $output
   usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
   partition=$(echo $output | awk '{ print $2 }' )
-  if [ $usep -ge <%= @alert_threshold %> ]; then
+  if [ $usep -ge <%= @alerting_threshold %> ]; then
     alert $partition $usep
   fi
 done
