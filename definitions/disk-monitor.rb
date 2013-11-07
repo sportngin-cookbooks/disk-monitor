@@ -10,7 +10,7 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin"
     a[:group] = params[:group] || "root"
     a[:template] = params[:template]
     a[:cookbook] = params[:cookbook] || "disk-monitor"
-    a[:check_frequency] = params[:check_frequency] || 15
+    a[:check_frequency] = params[:check_frequency] || 1
     a[:cron_frequency] = a[:check_frequency] == 1 ? "*" : "*/#{a[:check_frequency]}"
     a[:bin_path] = params[:bin_path]
     a[:bin_file] = params[:bin_file] || "disk-alert-#{a[:alert_level]}"

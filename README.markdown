@@ -15,7 +15,7 @@ Attributes
 * user - User to own and run the script * group - Group to own the script
 * template - Location of the template file defaults to 'alert.sh.erb'
 * cookbook - Change the cookbook to run the lwrp from defaults to this cookbook
-* check_frequency - Frequency of the disk check, defaults to every 15 minutes
+* check_frequency - Frequency of the disk check, defaults to every minute
 * bin_path - Path to the bin directory to place the alert, defaults to /usr/local/bin
 * bin_file -  Name of the alert binary, defaults to disk-alert-NAME
 
