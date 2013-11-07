@@ -12,8 +12,8 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin"
     a[:cookbook] = params[:cookbook] || "disk-monitor"
     a[:check_frequency] = params[:check_frequency] || 15
     a[:bin_path] = params[:bin_path]
-    a[:bin_file] = params[:bin_file] || "disk-alert-#{application[:alert_level]}"
-    a[:bin] = "#{application[:bin_path]}/#{application[:bin_file]}"
+    a[:bin_file] = params[:bin_file] || "disk-alert-#{a[:alert_level]}"
+    a[:bin] = "#{a[:bin_path]}/#{a[:bin_file]}"
   end
 
   template application[:bin] do
