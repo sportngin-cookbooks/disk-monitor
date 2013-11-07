@@ -27,7 +27,7 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin"
   end
 
   cron "disk-alert-#{application[:alert_level]}" do
-    minute a[:cron_frequency]
+    minute application[:cron_frequency]
     user application[:user]
     command application[:bin]
   end
