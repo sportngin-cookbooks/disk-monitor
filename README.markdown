@@ -12,7 +12,8 @@ Attributes
 * app_name - Name of the application
 * hostname - Hostname of the machine the alert was placed on, defaults to node[:hostname]
 * alerting_threshold - Disk percentage at which the alert will be triggered, defaults to 90%
-* user - User to own and run the script * group - Group to own the script
+* user - User to own and run the script 
+* group - Group to own the script
 * template - Location of the template file defaults to 'alert.sh.erb'
 * cookbook - Change the cookbook to run the lwrp from defaults to this cookbook
 * check_frequency - Frequency of the disk check, defaults to every minute
