@@ -20,7 +20,7 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin"
   template options[:bin] do
     source options[:template]
     cookbook options[:cookbook]
-    user options[:user]
+    owner options[:user]
     group options[:group]
     mode 0755
     variables options
