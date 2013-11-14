@@ -14,7 +14,7 @@ define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin"
     :bin_path => params[:bin_path]
   }
   options[:bin_file] = params[:bin_file] || "disk-alert-#{options[:alert_level]}"
-  options[:bin] = "#{options[:bin_path]}/#{a[:bin_file]}"
+  options[:bin] = "#{options[:bin_path]}/#{options[:bin_file]}"
   options[:cron_frequency] = options[:check_frequency] == 1 ? "*" : "*/#{options[:check_frequency]}"
 
   template options[:bin] do
