@@ -1,35 +1,35 @@
 define :disk_monitor, :template => "alert.sh.erb", :bin_path => "/usr/local/bin" do
-  application = Hash.new("").tap do |a|
-    a[:alert_level] = params[:name]
-    a[:app_name] = params[:app_name]
-    a[:environment] = params[:environment]
-    a[:pd_service_key] = params[:pd_service_key]
-    a[:hostname] = params[:hostname] || node[:hostname]
-    a[:alerting_threshold] = params[:alerting_threshold] || 90
-    a[:user] = params[:user] || "root"
-    a[:group] = params[:group] || "root"
-    a[:template] = params[:template]
-    a[:cookbook] = params[:cookbook] || "disk-monitor"
-    a[:check_frequency] = params[:check_frequency] || 1
-    a[:cron_frequency] = a[:check_frequency] == 1 ? "*" : "*/#{a[:check_frequency]}"
-    a[:bin_path] = params[:bin_path]
-    a[:bin_file] = params[:bin_file] || "disk-alert-#{a[:alert_level]}"
-    a[:bin] = "#{a[:bin_path]}/#{a[:bin_file]}"
-  end
+  options = {
+    :alert_level => params[:name],
+    :app_name => params[:app_name],
+    :environment => params[:environment],
+    :pd_service_key => params[:pd_service_key],
+    :hostname => (params[:hostname] || node[:hostname]),
+    :alerting_threshold => (params[:alerting_threshold] || 90),
+    :user => (params[:user] || "root"),
+    :group => (params[:group] || "root"),
+    :template => params[:template],
+    :cookbook => (params[:cookbook] || "disk-monitor"),
+    :check_frequency => (params[:check_frequency] || 1),
+    :bin_path => params[:bin_path]
+  }
+  options[:bin_file] = params[:bin_file] || "disk-alert-#{options[:alert_level]}"
+  options[:bin] = "#{options[:bin_path]}/#{a[:bin_file]}"
+  options[:cron_frequency] = options[:check_frequency] == 1 ? "*" : "*/#{options[:check_frequency]}"
 
-  template application[:bin] do
-    source application[:template]
-    cookbook application[:cookbook]
-    user application[:user]
-    group application[:group]
+  template options[:bin] do
+    source options[:template]
+    cookbook options[:cookbook]
+    user options[:user]
+    group options[:group]
     mode 0755
-    variables application
+    variables options
   end
 
-  cron "disk-alert-#{application[:alert_level]}" do
-    minute application[:cron_frequency]
-    user application[:user]
-    command application[:bin]
+  cron "disk-alert-#{options[:alert_level]}" do
+    minute options[:cron_frequency]
+    user options[:user]
+    command options[:bin]
   end
 
 end
