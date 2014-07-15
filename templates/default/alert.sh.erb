@@ -6,7 +6,7 @@ curl -H "Content-type: application/json" -X POST \
       'service_key': '<%= @pd_service_key %>',
       'incident_key': '<%= @app_name %>-<%= @environment %>-<%= @hostname %>',
       'event_type': 'trigger',
-      'description': \"<%= @app_name %> <%= @environment %> running low on disk space $1($2%) <%= @hostname %>\",
+      'description': \"<%= @app_name %> <%= @environment %> running low on disk space $1($2%) <%= @hostname %>\"
     }" \
     "https://events.pagerduty.com/generic/2010-04-15/create_event.json"
 }
