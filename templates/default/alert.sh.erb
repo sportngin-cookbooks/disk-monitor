@@ -11,7 +11,7 @@ function alert_json {
 
 function alert {
 curl -H "Content-type: application/json" -X POST \
-  -d $(alert_json $1 $2) \
+  -d "$(alert_json $1 $2)" \
   "https://events.pagerduty.com/generic/2010-04-15/create_event.json"
 }
 
